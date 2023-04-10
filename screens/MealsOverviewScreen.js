@@ -1,9 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-const MealsOverviewScreen = () => {
+const MealsOverviewScreen = ({ route }) => {
+  // We extract the params object from navigate
+  const catId = route.params.categoryId;
+
   return (
     <View style={styles.container}>
-      <Text>Meals Overview Screen</Text>
+      <Text>Meals Overview Screen - {catId}</Text>
     </View>
   );
 };
