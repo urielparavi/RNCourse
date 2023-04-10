@@ -7,8 +7,8 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import Title from '../components/ui/Title';
-import Colors from '../constants/colors';
+import Title from '../components/ui/Title.ios';
+import Colors from '../constants/colors.ios';
 import PrimaryButton from '../components/ui/PrimaryButton';
 
 const GameOverScreen = ({ roundsNumber, userNumber, onStartNewGame }) => {
