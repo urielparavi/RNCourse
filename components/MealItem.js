@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import {
   Image,
   Platform,
@@ -7,12 +8,28 @@ import {
   View,
 } from 'react-native';
 
-const MealItem = ({ title, imageUrl, duration, complexity, affordability }) => {
+const MealItem = ({
+  id,
+  title,
+  imageUrl,
+  duration,
+  complexity,
+  affordability,
+}) => {
+  const navigation = useNavigation();
+
+  const selectMealItemHandler = () => {
+    navigation.navigate('MealDetail', {
+      mealId: id,
+    });
+  };
+
   return (
     <View style={styles.mealItem}>
       <Pressable
         android_ripple={{ color: '#ccc' }}
         style={({ pressed }) => (pressed ? styles.buttonPressed : null)}
+        onPress={selectMealItemHandler}
       >
         {/* for rounded corners at the top an ios because we removed the overflow hidden */}
         <View style={styles.innerContainer}>
