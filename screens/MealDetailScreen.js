@@ -1,16 +1,10 @@
 import { useLayoutEffect } from 'react';
-import {
-  Button,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { MEALS } from '../data/dummy-data';
 import MealDetails from '../components/MealDetails';
 import Subtitle from '../components/MealDetail/Subtitle';
 import List from '../components/MealDetail/List';
+import IconButton from '../components/IconButton';
 
 const MealDetailScreen = ({ route, navigation }) => {
   // On that params object I have mealId property, because when navigating to this MealDetail screen,
@@ -26,7 +20,13 @@ const MealDetailScreen = ({ route, navigation }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => {
-        return <Button title="Tap me!" onPress={headerButtonPressHandler} />;
+        return (
+          <IconButton
+            icon="star"
+            color="white"
+            onPress={headerButtonPressHandler}
+          />
+        );
       },
     });
   }, [navigation, headerButtonPressHandler]);
