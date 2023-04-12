@@ -1,15 +1,13 @@
 import { useLayoutEffect } from 'react';
-import { StyleSheet, FlatList, View } from 'react-native';
-import { CATEGORIES, MEALS } from '../data/dummy-data';
-import MealItem from '../components/MealItem';
+import { View, FlatList, StyleSheet } from 'react-native';
 
-const MealsOverviewScreen = ({ route, navigation }) => {
-  // We extract the params object from navigate
+import MealItem from '../components/MealItem';
+import { MEALS, CATEGORIES } from '../data/dummy-data';
+
+function MealsOverviewScreen({ route, navigation }) {
   const catId = route.params.categoryId;
 
   const displayedMeals = MEALS.filter((mealItem) => {
-    // If we have a index greater or equal than zero, a category is part of that meal, because if not find a given
-    // category id in that array, indexOf would return minus one
     return mealItem.categoryIds.indexOf(catId) >= 0;
   });
 
@@ -23,7 +21,7 @@ const MealsOverviewScreen = ({ route, navigation }) => {
     });
   }, [catId, navigation]);
 
-  const renderMealItem = (itemData) => {
+  function renderMealItem(itemData) {
     const item = itemData.item;
 
     const mealItemProps = {
@@ -34,9 +32,8 @@ const MealsOverviewScreen = ({ route, navigation }) => {
       complexity: item.complexity,
       duration: item.duration,
     };
-
     return <MealItem {...mealItemProps} />;
-  };
+  }
 
   return (
     <View style={styles.container}>
@@ -47,7 +44,8 @@ const MealsOverviewScreen = ({ route, navigation }) => {
       />
     </View>
   );
-};
+}
+
 export default MealsOverviewScreen;
 
 const styles = StyleSheet.create({

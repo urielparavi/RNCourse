@@ -1,21 +1,20 @@
 import { useLayoutEffect } from 'react';
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { MEALS } from '../data/dummy-data';
-import MealDetails from '../components/MealDetails';
-import Subtitle from '../components/MealDetail/Subtitle';
-import List from '../components/MealDetail/List';
-import IconButton from '../components/IconButton';
+import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 
-const MealDetailScreen = ({ route, navigation }) => {
-  // On that params object I have mealId property, because when navigating to this MealDetail screen,
-  // I set the mealId on that params object
+import IconButton from '../components/IconButton';
+import List from '../components/MealDetail/List';
+import Subtitle from '../components/MealDetail/Subtitle';
+import MealDetails from '../components/MealDetails';
+import { MEALS } from '../data/dummy-data';
+
+function MealDetailScreen({ route, navigation }) {
   const mealId = route.params.mealId;
 
   const selectedMeal = MEALS.find((meal) => meal.id === mealId);
 
-  const headerButtonPressHandler = () => {
+  function headerButtonPressHandler() {
     console.log('Pressed!');
-  };
+  }
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -51,7 +50,8 @@ const MealDetailScreen = ({ route, navigation }) => {
       </View>
     </ScrollView>
   );
-};
+}
+
 export default MealDetailScreen;
 
 const styles = StyleSheet.create({

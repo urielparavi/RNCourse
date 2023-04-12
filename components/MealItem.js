@@ -1,29 +1,30 @@
-import { useNavigation } from '@react-navigation/native';
 import {
-  Image,
-  Platform,
-  Pressable,
-  StyleSheet,
-  Text,
   View,
+  Pressable,
+  Text,
+  Image,
+  StyleSheet,
+  Platform,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 import MealDetails from './MealDetails';
 
-const MealItem = ({
+function MealItem({
   id,
   title,
   imageUrl,
   duration,
   complexity,
   affordability,
-}) => {
+}) {
   const navigation = useNavigation();
 
-  const selectMealItemHandler = () => {
+  function selectMealItemHandler() {
     navigation.navigate('MealDetail', {
       mealId: id,
     });
-  };
+  }
 
   return (
     <View style={styles.mealItem}>
@@ -32,7 +33,6 @@ const MealItem = ({
         style={({ pressed }) => (pressed ? styles.buttonPressed : null)}
         onPress={selectMealItemHandler}
       >
-        {/* for rounded corners at the top an ios because we removed the overflow hidden */}
         <View style={styles.innerContainer}>
           <View>
             <Image source={{ uri: imageUrl }} style={styles.image} />
@@ -40,14 +40,15 @@ const MealItem = ({
           </View>
           <MealDetails
             duration={duration}
-            complexity={complexity}
             affordability={affordability}
+            complexity={complexity}
           />
         </View>
       </Pressable>
     </View>
   );
-};
+}
+
 export default MealItem;
 
 const styles = StyleSheet.create({
@@ -58,9 +59,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     elevation: 4,
     shadowColor: 'black',
-    shadowOpacity: 0.35,
+    shadowOpacity: 0.25,
     shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 16,
+    shadowRadius: 8,
   },
   buttonPressed: {
     opacity: 0.5,

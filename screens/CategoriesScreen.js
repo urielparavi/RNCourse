@@ -1,15 +1,15 @@
 import { FlatList } from 'react-native';
-import { CATEGORIES } from '../data/dummy-data';
 import CategoryGridTile from '../components/CategoryGridTile';
 
-// navigation => spical prop from Stack.Screen to navigate
-const CategoriesScreen = ({ navigation }) => {
-  const renderCategoryItem = (itemData) => {
-    const pressHandler = () => {
+import { CATEGORIES } from '../data/dummy-data';
+
+function CategoriesScreen({ navigation }) {
+  function renderCategoryItem(itemData) {
+    function pressHandler() {
       navigation.navigate('MealsOverview', {
         categoryId: itemData.item.id,
       });
-    };
+    }
 
     return (
       <CategoryGridTile
@@ -18,7 +18,7 @@ const CategoriesScreen = ({ navigation }) => {
         onPress={pressHandler}
       />
     );
-  };
+  }
 
   return (
     <FlatList
@@ -28,6 +28,6 @@ const CategoriesScreen = ({ navigation }) => {
       numColumns={2}
     />
   );
-};
+}
 
 export default CategoriesScreen;

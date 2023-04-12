@@ -1,6 +1,6 @@
-import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, View, Text, StyleSheet, Platform } from 'react-native';
 
-const CategoryGridTile = ({ title, color, onPress }) => {
+function CategoryGridTile({ title, color, onPress }) {
   return (
     <View style={styles.gridItem}>
       <Pressable
@@ -17,7 +17,8 @@ const CategoryGridTile = ({ title, color, onPress }) => {
       </Pressable>
     </View>
   );
-};
+}
+
 export default CategoryGridTile;
 
 const styles = StyleSheet.create({
@@ -27,7 +28,6 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 8,
     elevation: 4,
-    // It does require backgroundColor for to see the shadow in ios
     backgroundColor: 'white',
     shadowColor: 'black',
     shadowOpacity: 0.25,
@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
   innerContainer: {
     flex: 1,
     padding: 16,
-    // For ios i added the borderRadius in the innerContainer additionally to the itemGrid (outerContainer)
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
