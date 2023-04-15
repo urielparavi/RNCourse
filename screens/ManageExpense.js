@@ -2,6 +2,7 @@ import { useLayoutEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import IconButton from '../components/UI/IconButton';
 import { GlobalStyles } from '../constants/style';
+import Button from '../components/UI/Button';
 
 const ManageExpense = ({ route, navigation }) => {
   // ? => In case that we load this screen without any params - in that case the params will be undefined
@@ -18,8 +19,20 @@ const ManageExpense = ({ route, navigation }) => {
 
   const deleteExpenseHandler = () => {};
 
+  const cancelHandler = () => {};
+
+  const confirmHandler = () => {};
+
   return (
     <View style={styles.container}>
+      <View style={styles.buttons}>
+        <Button style={styles.button} mode="flat" onPress={cancelHandler}>
+          Cancel
+        </Button>
+        <Button style={styles.button} onPress={confirmHandler}>
+          {isEditing ? 'Update' : 'Add'}
+        </Button>
+      </View>
       {isEditing && (
         <View style={styles.deleteContainer}>
           <IconButton
@@ -40,6 +53,15 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     backgroundColor: GlobalStyles.colors.primary800,
+  },
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button: {
+    minWidth: 120,
+    marginHorizontal: 8,
   },
   deleteContainer: {
     marginTop: 16,
