@@ -3,8 +3,11 @@ import { StyleSheet, View } from 'react-native';
 import IconButton from '../components/UI/IconButton';
 import { GlobalStyles } from '../constants/style';
 import Button from '../components/UI/Button';
+import { useContext } from 'react';
+import { ExpensesContext } from '../store/expenses-context';
 
 const ManageExpense = ({ route, navigation }) => {
+  const expensesCtx = useContext(ExpensesContext);
   // ? => In case that we load this screen without any params - in that case the params will be undefined
   // and trying to access to expenseId property would cause an error.
   const editedExpenseId = route.params?.expenseId;
@@ -18,6 +21,7 @@ const ManageExpense = ({ route, navigation }) => {
   }, [navigation, isEditing]);
 
   const deleteExpenseHandler = () => {
+    expensesCtx.deleteExpense(editedExpenseId);
     navigation.goBack();
   };
 
@@ -26,6 +30,19 @@ const ManageExpense = ({ route, navigation }) => {
   };
 
   const confirmHandler = () => {
+    if (isEditing) {
+      expensesCtx.updateExpense(editedExpenseId, {
+        description: 'Test!!!',
+        amount: 29.99,
+        date: new Date('2023-04-15'),
+      });
+    } else {
+      expensesCtx.addExpense({
+        description: 'Text',
+        amount: 19.99,
+        date: new Date('2023-04-12'),
+      });
+    }
     navigation.goBack();
   };
 

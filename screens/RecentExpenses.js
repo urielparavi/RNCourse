@@ -13,7 +13,7 @@ const RecentExpenses = () => {
     // If expense.date greater than that, it means that it's younger that that - it's more recent that that.
     // it's somewere within those last seven days. If it's not greater than that, it's means the expense.date
     // would be older than seven days
-    return expense.date > date7DaysAgo;
+    return expense.date >= date7DaysAgo && expense.date <= today; // rule that out the dates in the future
   });
 
   return (
