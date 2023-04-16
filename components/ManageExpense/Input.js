@@ -1,10 +1,10 @@
 import { Text, TextInput, View } from 'react-native';
 
-const Input = ({ label, textInput }) => {
+const Input = ({ label, textInputConfig }) => {
   return (
     <View>
       <Text>{label}</Text>
-      <TextInput {...textInput} />
+      <TextInput {...textInputConfig} />
     </View>
   );
 };
