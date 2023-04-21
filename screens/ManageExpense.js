@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import IconButton from '../components/UI/IconButton';
 import { GlobalStyles } from '../constants/style';
@@ -6,8 +6,13 @@ import { useContext } from 'react';
 import { ExpensesContext } from '../store/expenses-context';
 import ExpenseForm from '../components/ManageExpense/ExpenseForm';
 import { deleteExpense, storeExpense, updateExpense } from '../util/http';
+import LoadingOverlay from '../components/UI/LoadingOverlay';
+import ErrorOverlay from '../components/UI/ErrorOverlay';
 
 const ManageExpense = ({ route, navigation }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState();
+
   const expensesCtx = useContext(ExpensesContext);
   // ? => In case that we load this screen without any params - in that case the params will be undefined
   // and trying to access to expenseId property would cause an error.
@@ -26,9 +31,17 @@ const ManageExpense = ({ route, navigation }) => {
   }, [navigation, isEditing]);
 
   const deleteExpenseHandler = async () => {
-    await deleteExpense(editedExpenseId);
-    expensesCtx.deleteExpense(editedExpenseId);
-    navigation.goBack();
+    setIsSubmitting(true);
+    try {
+      await deleteExpense(editedExpenseId);
+
+      expensesCtx.deleteExpense(editedExpenseId);
+      navigation.goBack();
+    } catch (error) {
+      setError('Could not delete expense - please try again later!');
+      // If we clicked the okay button on the ErrorOverlay, I don't wanna show the LoadingOverlay instead
+      setIsSubmitting(false);
+    }
   };
 
   const cancelHandler = () => {
@@ -36,17 +49,31 @@ const ManageExpense = ({ route, navigation }) => {
   };
 
   const confirmHandler = async (expenseData) => {
-    if (isEditing) {
-      // Update first locally and after that we send the update data to backend
-      expensesCtx.updateExpense(editedExpenseId, expenseData);
-      // update
-      await updateExpense(editedExpenseId, expenseData);
-    } else {
-      const id = await storeExpense(expenseData);
-      expensesCtx.addExpense({ ...expenseData, id: id });
+    setIsSubmitting(true);
+    try {
+      if (isEditing) {
+        // Update first locally and after that we send the update data to backend
+        expensesCtx.updateExpense(editedExpenseId, expenseData);
+        // update
+        await updateExpense(editedExpenseId, expenseData);
+      } else {
+        const id = await storeExpense(expenseData);
+        expensesCtx.addExpense({ ...expenseData, id: id });
+      }
+      navigation.goBack();
+    } catch (error) {
+      setError('Could not save data - please try again later!');
+      setIsSubmitting(false);
     }
-    navigation.goBack();
   };
+
+  if (error && !isSubmitting) {
+    return <ErrorOverlay message={error} />;
+  }
+
+  if (isSubmitting) {
+    return <LoadingOverlay />;
+  }
 
   return (
     <View style={styles.container}>
