@@ -1,13 +1,13 @@
 import axios from 'axios';
 
 const BACKEND_URL =
-  'https://react-native-app-2d51e-default-rtdb.europe-west1.firebasedatabase.app/expenses.json';
+  'https://react-native-app-2d51e-default-rtdb.europe-west1.firebasedatabase.app';
 
-export const storeExpense = (expenseData) => {
+export function storeExpense(expenseData) {
   axios.post(BACKEND_URL + '/expenses.json', expenseData);
-};
+}
 
-export const fetchExpenses = async () => {
+export async function fetchExpenses() {
   const response = await axios.get(BACKEND_URL + '/expenses.json');
 
   const expenses = [];
@@ -16,11 +16,11 @@ export const fetchExpenses = async () => {
     const expenseObj = {
       id: key,
       amount: response.data[key].amount,
-      // new Date() => firebase store the date as a string and I wanna convert it back into a date object for the front end
       date: new Date(response.data[key].date),
       description: response.data[key].description,
     };
     expenses.push(expenseObj);
   }
+
   return expenses;
-};
+}
