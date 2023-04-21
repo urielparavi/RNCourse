@@ -3,9 +3,15 @@ import axios from 'axios';
 const BACKEND_URL =
   'https://react-native-app-2d51e-default-rtdb.europe-west1.firebasedatabase.app';
 
-export function storeExpense(expenseData) {
-  axios.post(BACKEND_URL + '/expenses.json', expenseData);
-}
+export const storeExpense = async (expenseData) => {
+  const response = await axios.post(
+    BACKEND_URL + '/expenses.json',
+    expenseData
+  );
+  // The id from firebase within the response.data => the property name
+  const id = response.data.name;
+  return id;
+};
 
 export async function fetchExpenses() {
   const response = await axios.get(BACKEND_URL + '/expenses.json');
